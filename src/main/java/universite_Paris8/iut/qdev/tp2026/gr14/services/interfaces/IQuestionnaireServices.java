@@ -9,7 +9,9 @@ import universite_Paris8.iut.qdev.tp2026.gr14.utils.exceptions.DonneesCorrompues
 
 public interface IQuestionnaireServices {
 
-    List<QuestionnaireDTO> parcourirQuestionnaireDTO();
+    List<QuestionnaireDTO> parcourirQuestionnaireDTO(String path)
+            throws CSVInexistantException, DonneesCorrompuesException;
 
-    List<QuestionDTO> chargerFichier(String path) throws CSVInexistantException, DonneesCorrompuesException;
+    List<QuestionDTO> chargerFichier(String path)
+            throws CSVInexistantException, DonneesCorrompuesException;
 }

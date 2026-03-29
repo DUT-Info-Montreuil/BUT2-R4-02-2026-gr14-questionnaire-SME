@@ -33,7 +33,7 @@ public class QuestsOKsImplMock implements IQuestionnaireServices {
         question.setLibelleQuestion(
                 "De quel petit objet se munit le golfeur pour surelever sa balle avant de la frapper ?");
         question.setReponsesQuestion("Tee");
-        question.setDifficulte(DifficulteEnum.FACILE);
+        question.setDifficulte(DifficulteEnum.DEBUTANT);
         question.setExplication(
                 "Le joueur peut poser sa balle sur une cheville de bois ou de plastique.");
         question.setReference("https://fr.wikipedia.org/wiki/Materiel_de_golf");

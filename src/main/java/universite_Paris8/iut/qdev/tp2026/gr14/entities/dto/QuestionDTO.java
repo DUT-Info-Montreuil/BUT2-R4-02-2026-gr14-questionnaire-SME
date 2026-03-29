@@ -6,15 +6,35 @@ import universite_Paris8.iut.qdev.tp2026.gr14.utils.enums.LanguesEnum;
 public class QuestionDTO {
 
     private int id;
-    private String libelleQuestionnaire;
+    private String libelleQuestionnaire = "";
     private int numeroQuestion;
     private LanguesEnum langue;
-    private String libelleQuestion;
-    private String reponsesQuestion;
+    private String libelleQuestion = "";
+    private String reponsesQuestion = "";
     private DifficulteEnum difficulte;
-    private String explication;
-    private String reference;
+    private String explication = "";
+    private String reference = "";
 
+    // 1. Constructeur vide (Indispensable pour de nombreux frameworks)
+    public QuestionDTO() {
+    }
+
+    // 2. Constructeur complet (Très utile pour ton futur CSVService)
+    public QuestionDTO(int id, String libelleQuestionnaire, int numeroQuestion, LanguesEnum langue,
+                       String libelleQuestion, String reponsesQuestion, DifficulteEnum difficulte,
+                       String explication, String reference) {
+        this.id = id;
+        this.libelleQuestionnaire = libelleQuestionnaire;
+        this.numeroQuestion = numeroQuestion;
+        this.langue = langue;
+        this.libelleQuestion = libelleQuestion;
+        this.reponsesQuestion = reponsesQuestion;
+        this.difficulte = difficulte;
+        this.explication = explication;
+        this.reference = reference;
+    }
+
+    // Getters et Setters
     public int getId() {
         return id;
     }
@@ -85,5 +105,12 @@ public class QuestionDTO {
 
     public void setReference(String reference) {
         this.reference = reference;
+    }
+
+    // 3. Ajout d'une méthode toString() pour faciliter le debug dans la console
+    @Override
+    public String toString() {
+        return String.format("[%d] %s | %s | %s",
+                numeroQuestion, libelleQuestion, difficulte, langue);
     }
 }

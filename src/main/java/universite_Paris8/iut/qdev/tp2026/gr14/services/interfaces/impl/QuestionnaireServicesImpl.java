@@ -64,6 +64,8 @@ import universite_Paris8.iut.qdev.tp2026.gr14.utils.exceptions.DonneesCorrompues
                 boolean premiereLigne = true;
 
                 while ((ligne = br.readLine()) != null) {
+                    ligne = supprimerBom(ligne);
+
                     // Sauter la ligne d'en-tête si elle existe
                     if (premiereLigne) {
                         premiereLigne = false;
@@ -97,7 +99,7 @@ import universite_Paris8.iut.qdev.tp2026.gr14.utils.exceptions.DonneesCorrompues
          * @throws DonneesCorrompuesException si la ligne est trop courte ou mal formatée
          */
         private QuestionDTO parserLigneEnQuestion(String ligne) throws DonneesCorrompuesException {
-            String[] colonnes = ligne.split(SEPARATEUR);
+            String[] colonnes = ligne.split(SEPARATEUR, -1);
 
             if (colonnes.length < 9) {
                 throw new DonneesCorrompuesException("Les donnees du questionnaire sont corrompues ou invalides.");
@@ -105,16 +107,16 @@ import universite_Paris8.iut.qdev.tp2026.gr14.utils.exceptions.DonneesCorrompues
 
             try {
                 QuestionDTO q = new QuestionDTO();
-                q.setId(Integer.parseInt(colonnes[0].trim()));
-                q.setLibelleQuestionnaire(colonnes[1].trim());
-                q.setNumeroQuestion(Integer.parseInt(colonnes[2].trim()));
-                q.setLangue(LanguesEnum.valueOf(colonnes[3].trim()));
-                q.setLibelleQuestion(colonnes[4].trim());
-                q.setReponsesQuestion(colonnes[5].trim());
+                q.setId(Integer.parseInt(nettoyerValeur(colonnes[0])));
+                q.setLibelleQuestionnaire(nettoyerValeur(colonnes[1]));
+                q.setNumeroQuestion(Integer.parseInt(nettoyerValeur(colonnes[2])));
+                q.setLangue(LanguesEnum.valueOf(nettoyerValeur(colonnes[3])));
+                q.setLibelleQuestion(nettoyerValeur(colonnes[4]));
+                q.setReponsesQuestion(nettoyerValeur(colonnes[5]));
                 // Le CSV stocke la difficulté en int (1,2,3) → on mappe vers l'enum
-                q.setDifficulte(parseDifficulte(colonnes[6].trim()));
-                q.setExplication(colonnes[7].trim());
-                q.setReference(colonnes[8].trim());
+                q.setDifficulte(parseDifficulte(nettoyerValeur(colonnes[6])));
+                q.setExplication(nettoyerValeur(colonnes[7]));
+                q.setReference(nettoyerValeur(colonnes[8]));
                 return q;
 
             } catch (Exception e) {
@@ -131,5 +133,12 @@ import universite_Paris8.iut.qdev.tp2026.gr14.utils.exceptions.DonneesCorrompues
                 default:  return DifficulteEnum.valueOf(valeur.toUpperCase());
             }
         }
-    }
 
+        private String nettoyerValeur(String valeur) {
+            return supprimerBom(valeur).trim();
+        }
+
+        private String supprimerBom(String valeur) {
+            return valeur.replace("\uFEFF", "");
+        }
+    }

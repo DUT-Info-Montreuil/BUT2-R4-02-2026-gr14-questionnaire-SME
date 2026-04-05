@@ -90,6 +90,9 @@
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
         <version>3.3.0</version>
+        <configuration>
+          <forkCount>0</forkCount>
+        </configuration>
       </plugin>
     </plugins>
   </build>
